@@ -10,28 +10,27 @@ export class User{
     email!:string;
     dob!:string;
     agreetc!:boolean;
-    age!:number
+    age!:number;
     aboutYou!:string;
-
-}
-export class Address{
-    if!:number;
+  }
+  export class Address{
+    id!:number;
     addLine1!:string;
     addLine2!:string;
     city!:string;
-    state!:string;
+    state!:string
     zipCode!:number;
-}
-export class Product{
+  }
+  export class Product{
     id!:number;
-    name!:string;
+    name!:string
     uploadPhoto!:string;
-    uploadDesc!:string;
+    productDesc!:string;
     mrp!:number;
     dp!:number;
     status!:boolean;
-}
-export class Order{
+  }
+  export class Order{
     id!:number;
     userId!:number;
     sellerId!:number;
@@ -39,4 +38,4 @@ export class Order{
     deliveryAddress!:Address;
     contact!:number;
     dateTime!:string;
-}
+  }

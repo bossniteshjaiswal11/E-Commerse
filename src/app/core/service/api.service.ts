@@ -8,7 +8,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 export class ApiService {
   httpOptions ={
     headers: new HttpHeaders({
-      "content-Type": "application/json",
+      "Content-Type": "application/json",
       "Access-Control-Allow-Origin":"*"
     })
   }
@@ -16,7 +16,8 @@ export class ApiService {
   private formatErrors(error:any){
     return throwError(error.error)
   }
-  get(path:string, params:HttpParams =new HttpParams()):Observable<any>{
+  get( path:string, params:HttpParams =new HttpParams()):Observable<any>{
+    console.log(path,params)
     return this.http.get(path,{params}).pipe(catchError(this.formatErrors))
   }
   put(path:string,body:Object = {}):Observable<any>{

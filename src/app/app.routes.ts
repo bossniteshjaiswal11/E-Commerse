@@ -11,61 +11,51 @@ import { SellerDashboardComponent } from './customer/seller/seller-dashboard/sel
 import { BuyerDashboardComponent } from './customer/buyer/buyer-dashboard/buyer-dashboard.component';
 import { CheckoutComponent } from './customer/buyer/checkout/checkout.component';
 import { PageNotFoundComponent } from './shared/layouts/page-not-found/page-not-found.component';
+import { AdminAuthGuardLogin, AdminAuthGuardService, BuyerAuthGuardService, SellerAuthGuardService, SellerBuyerAuthGuardLogin } from './shared/services/auth-guard.service';
 
 export const routes: Routes = [
+    { path: "", redirectTo: "home", pathMatch: "full" },
+    { path: "home", component: HomeComponent },
+    { path: "my-profile", component: UserProfileComponent },
+    { path: "contact-us", component: ContactUsComponent },
+
+    //admin
     {
-        path: "",
-        redirectTo: "home",
-        pathMatch: "full"
+        path: '', canActivate:[AdminAuthGuardLogin], children: [
+            { path: "admin-login", component: AdminLoginComponent }
+        ]
     },
+    //dashboard
     {
-        path: "home", component: HomeComponent
+        path: '', canActivate:[AdminAuthGuardService], children: [
+            { path: "admin-dashboard", component: AdminDashboardComponent },
+            { path: "admin/user", component: UserCrudComponent },
+            { path: "admin/product", component: ProductComponent },
+        ]
     },
+    //sign-in
     {
-        path: "my-profile", component: UserProfileComponent
+        path: '', canActivate:[SellerBuyerAuthGuardLogin], children: [
+            { path: "sign-in", component: SigninSignupComponent },
+            { path: "sign-up", component: SigninSignupComponent }
+        ]
     },
+    //seller
     {
-        path: "contact-us",component: ContactUsComponent
-    },//admin
+        path: '', canActivate:[SellerAuthGuardService], children: [
+            { path: "seller-dashboard", component: SellerDashboardComponent },
+            { path: "seller/product", component: ProductComponent }
+        ]
+    },
+    //buyer
     {
-        path: '',
-        children: [
-            {
-                path: "admin-login",  component: AdminLoginComponent
-            }
+        path: '', canActivate:[BuyerAuthGuardService], children: [
+            { path: "buyer-dashboard", component: BuyerDashboardComponent },
+            { path: "checkout", component: CheckoutComponent }
         ]
     },
     {
-        path: '',
-        children: [
-            { path: "admin-dashboard",component: AdminDashboardComponent },
-            { path: "admin/user",component: UserCrudComponent},
-            { path: "admin/product", component: ProductComponent }, 
-        ]
-    },
-    {
-        path:'', 
-        children:[
-            { path:"sign-in",component:SigninSignupComponent},
-            { path:"sign-up", component:SigninSignupComponent }
-        ]
-    },
-    {
-        path:'',
-        children:[
-            {path:"seller-dashboard",component:SellerDashboardComponent },
-            { path:"seller/product",  component:ProductComponent  }
-        ]
-    },
-    {
-        path:'',
-        children:[
-            { path:"buyer-dashboard", component:BuyerDashboardComponent  },
-            { path:"checkout",component:CheckoutComponent }
-        ]
-    },
-    {
-        path:'**',
- component:PageNotFoundComponent 
+        path: '**',
+        component: PageNotFoundComponent
     }
 ];
